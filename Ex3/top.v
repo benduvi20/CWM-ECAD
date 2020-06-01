@@ -31,13 +31,13 @@ module counter(
 	
 always @(posedge clk) begin
 	if (rst == 1)
-		counter[0]
-	if (enable == 0)
-		counter
-	if (direction == 1)
-		counter <= counter + 4'd1; 
+		counter <= 7'd0
+	else if (enable == 0)
+		counter <= counter
+	else if (direction == 1)
+		counter <= counter + 7'd1; 
 	else 
-		counter <= counter - 4'd1; 
+		counter <= counter - 7'd1; 
 	end 
 assign counter_out = counter
       
