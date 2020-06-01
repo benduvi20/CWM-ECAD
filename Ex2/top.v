@@ -24,16 +24,18 @@ module mux(
     input a,
     input b,
     input sel,
-    output out    
+    output reg out    
     );
     
     //Todo: define registers and wires here
-    wire T1, T2, selbar;
 
     //Todo: define your logic here
-    not (selbar,sel);
-    and (T1,a,selbar);
-    and (T2,b,sel);
-    or (out,T1,T2);                
+    always @(a or b or sel)begin
+  	if (sel == 0)
+	out = a;
+	else 
+	out = b;
+    end          
       
+
 endmodule
