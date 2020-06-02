@@ -59,7 +59,7 @@ end
 initial begin
 	#50
 	if (!err)
-		$display("***TEST PASSED! :) ***");
+		$display("No errors recorded");
     
 	$finish; //finish after 50 ticks
 end 
