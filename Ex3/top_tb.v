@@ -17,6 +17,7 @@ module top_tb(
     parameter CLK_PERIOD = 10; //sets clock period, of 10 time units
     parameter TEST_PERIOD = 600; //in terms of time period, how long will the counter run for
 
+//<<<<<<< HEAD
 //Todo: Registers and wires
     reg clk;
     reg rst;
@@ -24,6 +25,19 @@ module top_tb(
     reg enable;
     reg err;
     wire [7:0] counter_out;
+//=======
+//parameter CLK_PERIOD = 5;
+
+//Todo: Regitsers and wires
+//>>>>>>> f2dc1069d9e51d71f4787bf4d5fd4b09125f6751
+
+reg clk;
+reg err;
+reg rst;
+reg dir;
+reg enable;
+reg [7:0] maxCount;
+
 
 //Todo: Clock generation
     initial
@@ -33,7 +47,15 @@ module top_tb(
          #(CLK_PERIOD/2) clk=~clk;
     end
 
+initial begin 
+	clk = 1'b0;
+	forever begin
+		#(CLK_PERIOD / 2) clk = ~clk;
+	end
+end
+
 //Todo: User logic
+<<<<<<< HEAD
     initial
     begin
     	rst=1; //reset counter to start
@@ -79,4 +101,42 @@ module top_tb(
 	.counter_out (counter_out[7:0])
 	);
 
+=======
+initial begin
+	err = 0;
+	rst = 0;	
+	dir = 1;
+	enable = 1;
+
+	#30
+	maxCount <= counter_out
+	dir <= 0; // count down
+	
+	#40
+	if maxCount < counter_out
+		err = 1;
+	enable = 0;
+	#45
+	rst = 1;
+	
+end
+
+initial begin
+	#50
+	if (!err)
+		$display("No errors recorded");
+    
+	$finish; //finish after 50 ticks
+end 
+
+
+counter count(
+	.clk(clk),
+	.rst(rst),
+	.direction(dir),
+	.enable(enable)
+	);
+
+ 
+>>>>>>> f2dc1069d9e51d71f4787bf4d5fd4b09125f6751
 endmodule 
