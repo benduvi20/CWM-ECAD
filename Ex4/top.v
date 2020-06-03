@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Exercise #4 
-// Student Name:
-// Date: 
+// Student Name: Benjamin Duvieusart
+// Date: 03/06/2020
 //
 //  Description: In this exercise, you need to design an electronic dice, following
 //  the diagram provided in the exercises documentation. The dice rolls as long as
@@ -15,4 +15,25 @@
 //
 //  You need to write the whole file.
 //////////////////////////////////////////////////////////////////////////////////
+`timescale 1ns / 100ps
+
+module roll(
+    //ports 
+    input rst,
+    input button,
+    input clk,
+    output reg [2:0] throw );
+
+	//logic
+	always@(posedge clk or posedge rst) begin
+		if(throw == 3'b000 || throw == 3'b111 || throw == 3'b110|| rst)
+			throw = 3'b001; 
+		else 
+			if(button)
+				throw = throw + 1;		
+			else
+				throw = throw; 
+	end
+	
+endmodule
 
