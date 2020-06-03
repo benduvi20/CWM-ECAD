@@ -6,54 +6,100 @@
 // Description: A testbench module to test Ex4 - Electronic Dice
 // You need to write the whole file
 //////////////////////////////////////////////////////////////////////////////////
-
 `timescale 1ns / 100ps
 
-    parameter CLK_PERIOD = 10;
+module top_tb(
+    );
+    
+	//Todo: Parameters
+	parameter CLK_PERIOD = 10;
 
-	reg clk, rst, button, err;
+	//Todo: Regitsers and wires
+	reg clk;
+	reg rst;
+	reg button;
+	reg err;
+	reg [2:0] throw_before;
 	wire [2:0] throw;
+
+	//Todo: Clock generation
+	initial begin
+		clk = 1'b0;
+		forever
+			#(CLK_PERIOD/2) clk=~clk;
+	end
+
+    
+	//Todo: User logic
 	
-    initial begin
-    clk = 0;
-    forever
-	if (throw == 3'd7)
-		err = 1
-        #(CLK_PERIOD/2) clk = ~clk;
-    end
-    
-    initial 
-	begin
-    	rst = 1;
-    	button = 1;
-    	count = 1;
-    	err = 0;
-    	forever 
-    	    rst <= 0;
-            #10
-       	    button = 0;
-            #20
-            rst = 1;
-        end
-    
-    initial begin
-    	#50
-    	if (err)
-    		$display("***TEST FAILED!***");
-    	else
-    		$display("***TEST PASSED!***"); 
-    end
 
+	initial begin
+		rst=1; // start with reset to initiate
+		#10
+		rst <= 0;
+		#50
+		rst <= 1;
+		#60
+		rst <= 0;
+	end
+	
+	initial begin
+		
+		button=1'b0;
+		err=0;
+		throw_before=3'b000; // start with reset
+	    
+		forever begin
+		    #CLK_PERIOD
+		        
+		    if (rst)
+		    begin
+		        if (throw!=3'b000)
+		        begin
+		            $display("***TEST FAILED!***");
+		            err=1;
+		        end
+		    end
+		        
+		    else if (throw_before==3'b000||throw_before==3'b111||throw_before==3'b110)
+		    begin
+		        if (throw != 3'b001)
+		        begin
+		            $display("***TEST FAILED!***");
+		            err=1;
+		        end
+		    end
+		            
+		    else if (!button)
+		    begin
+		        if (throw!=throw_before)
+		        begin
+		            $display("***TEST FAILED!***");
+		            err=1;
+		        end
+		    end
+		    
+		    throw_before <= throw;
+		    button=button+1;
 
+		end
+	end
+	
+	//Todo: Finish test, check for success
+	initial begin
+		// From 70s, time to complete one loop of testing
+		#220
+		if (err==0)
+			$display("***TEST PASSED! :) ***");
+		$finish;
+	end
 
-     //The instantiation of the user's module
-     roll top (
-     .rst (rst),
-     .button (button),
-     .clk (clk),
-     .throw (throw)
-     );
-     
+	//Todo: Instantiate counter module
+ 	roll top (
+	.clk (clk),		
+	.rst (rst),
+	.button (button),
+	.throw (throw)
+	);
 
-     
-endmodule
+endmodule 
