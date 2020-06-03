@@ -22,27 +22,28 @@
         #(CLK_PERIOD/2) clk = ~clk;
     end
     
-    initial begin
+    initial 
+	begin
     	rst = 1;
     	button = 1;
     	count = 1;
     	err = 0;
-    	forever begin
+    	forever 
     	    rst <= 0;
             #10
        	    button = 0;
             #20
             rst = 1;
-    	end
-    end
+        end
     
     initial begin
     	#50
     	if (err)
     		$display("***TEST FAILED!***");
     	else
-    		$display("***TEST PASSED!***");
+    		$display("***TEST PASSED!***"); 
     end
+
 
 
      //The instantiation of the user's module
