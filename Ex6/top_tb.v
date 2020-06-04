@@ -107,7 +107,7 @@ module top_tb(
 		        		end
 		    		end
 		        
-		    		else if (result_prev==3'b000||result_prev==3'b111||result_prev==3'b110)
+		    		else if ((button) && (result_prev==3'b000||result_prev==3'b111||result_prev==3'b110))
 		    		begin
 		        		if (result != 3'b001)
 		        		begin
