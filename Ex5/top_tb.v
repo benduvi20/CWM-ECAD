@@ -44,7 +44,6 @@ module top_tb(
 			
 			#CLK_PERIOD
 			
-			//if ((RAG_before==3'b000||RAG_before==3'b101||RAG_before==3'b111||RAG_before==3'b011) && (RAG==3'b000||RAG==3'b101||RAG==3'b111|RAG==3'b011))
 			if (RAG==3'b000||RAG==3'b101||RAG==3'b111|RAG==3'b011)
 				begin
 					$display("***TEST FAILED!***");
@@ -59,19 +58,19 @@ module top_tb(
 
 			else if ((RAG_before==3'b110) && (RAG!=3'b001))
 				begin
-					$display("***TEST FAILED!issue***");
+					$display("***TEST FAILED!***");
 					err=1;
 				end	
 
 			else if ((RAG_before==3'b001) && (RAG!=3'b010))
 				begin
-					$display("***TEST FAILED!issue***");
+					$display("***TEST FAILED!***");
 					err=1;
 				end	
 			
          		else if ((RAG_before==3'b010) && (RAG!=3'b001))
 				begin
-					$display("***TEST FAILED!issue***");
+					$display("***TEST FAILED!***");
 					err=1;
 				end
 
