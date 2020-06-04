@@ -39,8 +39,7 @@ module top_tb(
 		sel = 0;
 		#10
 		rst = 0;
-		#10
-		rst = 0;
+
 	end
 		
 	//Stimulus logic
