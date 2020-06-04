@@ -154,7 +154,7 @@ module top_tb(
 	end
 
 	//Todo: Instantiate Multiplex of Traffic or Dice module
- 	muxtd top (
+ 	mux top (
 	.rst (rst),
 	.clk (clk),		
 	.button (button),
