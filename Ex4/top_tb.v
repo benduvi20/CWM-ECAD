@@ -39,7 +39,7 @@ module top_tb(
 		rst <= 0;
 		#50
 		rst <= 1;
-		#60
+		#52
 		rst <= 0;
 	end
 	
@@ -54,18 +54,18 @@ module top_tb(
 		        
 		    if (rst)
 		    begin
-		        if (throw!=3'b000)
+		        if (throw!=3'b001)
 		        begin
-		            $display("***TEST FAILED!***");
+		            $display("***TEST 1 FAILED!***");
 		            err=1;
 		        end
 		    end
 		        
-		    else if (throw_before==3'b000||throw_before==3'b111||throw_before==3'b110)
+		    else if ((button) && (throw_before==3'b000||throw_before==3'b111||throw_before==3'b110))
 		    begin
 		        if (throw != 3'b001)
 		        begin
-		            $display("***TEST FAILED!***");
+		            $display("***TEST 2 FAILED!***");
 		            err=1;
 		        end
 		    end
@@ -74,7 +74,7 @@ module top_tb(
 		    begin
 		        if (throw!=throw_before)
 		        begin
-		            $display("***TEST FAILED!***");
+		            $display("***TEST 3 FAILED!***");
 		            err=1;
 		        end
 		    end
@@ -87,8 +87,7 @@ module top_tb(
 	
 	//Todo: Finish test, check for success
 	initial begin
-		// From 70s, time to complete one loop of testing
-		#220
+		#250
 		if (err==0)
 			$display("***TEST PASSED! :) ***");
 		$finish;
