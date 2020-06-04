@@ -1,4 +1,4 @@
-
+ 
 set design "Ex7"
 set top top
 set sim_top top_tb
