@@ -8,22 +8,18 @@ module roll(
     output reg [2:0] throw );
 
 	//logic
-	always@(posedge clk or posedge rst)
-		if (rst)
-			throw <= 3'b000
-	
-		else if(throw == 3'b000 | throw == 3'b111) 
-			throw <= 3'b001;
- 		 
-		else if (button) 
-		begin
-			if (throw == 3'b110)
-			throw <= 3'b001
-	
-			else
-			throw <= throw + 1;	
-		 end 
-		else 
+	always@(posedge clk)begin
 
-			
+		if (rst || throw == 3'b00 || throw == 3'b111)
+ 		 	throw <= 3'b001;
+
+		else if (button && throw == 3'b110)
+			throw <= 3'b001;
+	
+		else if (button && throw !== 3'b110)
+			throw <= throw + 1;	
+		  
+		else 
+			throw <= throw;
+	end
 endmodule

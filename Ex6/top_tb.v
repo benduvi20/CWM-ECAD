@@ -35,12 +35,10 @@ module top_tb(
 		sel=1;	
 		rst=1;
 		// traffic requires 5 clk period to complete
-		#51 // If put at 50, test will be for sel=0 instead of the results on sel=1 at clock #45 instance
+		#101 // If put at 50, test will be for sel=0 instead of the results on sel=1 at clock #45 instance
 		sel = 0;
 		#10
 		rst = 0;
-		#50
-		rst = 1;
 		#10
 		rst = 0;
 	end
@@ -54,7 +52,6 @@ module top_tb(
 		forever begin
 			#CLK_PERIOD
 
-			// testbench for traffic = 1/RAG
 			if (sel)
 			begin
 			
@@ -62,31 +59,31 @@ module top_tb(
 			
 				if (result==3'b000||result==3'b101||result==3'b111|result==3'b011)
 				begin
-					$display("***TRAFFIC TEST FAILED!***");
+					$display("***TRAFFIC TEST 1 FAILED!***");
 					err=1;
 				end
 			
 				else if ((result_prev==3'b100) && (result!=3'b110))
 				begin
-					$display("***TRAFFIC TEST FAILED!***");
+					$display("***TRAFFIC TEST 2 FAILED!***");
 					err=1;
 				end
 
 				else if ((result_prev==3'b110) && (result!=3'b001))
 				begin
-					$display("***TRAFFIC TEST FAILED!***");
+					$display("***TRAFFIC TEST 3 FAILED!***");
 					err=1;
 				end	
 
 				else if ((result_prev==3'b001) && (result!=3'b010))
 				begin
-					$display("***TRAFFIC TEST FAILED!***");
+					$display("***TRAFFIC TEST 4 FAILED!***");
 					err=1;
 				end	
 			
-         			else if ((result_prev==3'b010) && (result!=3'b001))
+         			else if ((result_prev==3'b010) && (result!=3'b100))
 				begin
-					$display("***TRAFFIC TEST FAILED!***");
+					$display("***TRAFFIC TEST 5 FAILED!***");
 					err=1;
 				end
 
@@ -104,9 +101,9 @@ module top_tb(
 					
 				if (rst)
 		    		begin
-		        		if (result!=3'b000)
+		        		if (result!=3'b001)
 		       			begin
-		            			$display("***DICE TEST FAILED!***");
+		            			$display("***DICE TEST 1 FAILED!***");
 		            			err=1;
 		        		end
 		    		end
@@ -115,7 +112,7 @@ module top_tb(
 		    		begin
 		        		if (result != 3'b001)
 		        		begin
-		            			$display("***DICE TEST FAILED!***");
+		            			$display("***DICE TEST 2 FAILED!***");
 		            			err=1;
 		        		end
 		    		end
@@ -124,7 +121,7 @@ module top_tb(
 		    		begin
 		        		if (result!=result_prev)
 		        		begin
-		            			$display("***DICE TEST FAILED!***");
+		            			$display("***DICE TEST 3 FAILED!***");
 		            			err=1;
 		        		end
 		    		end
@@ -138,14 +135,13 @@ module top_tb(
 
 	//Finish simulation and check for success
 	initial begin
-		// 5 periods for traffic, 22 for dice
-		#270
+		#250
 		if (err==0)
 			$display("***TEST PASSED! :) ***");
 		$finish;
 	end
 
-	//Todo: Instantiate Multiplex of Traffic or Dice module
+	//Instantiate Multiplex of Traffic or Dice module
  	mux top (
 	.rst (rst),
 	.clk (clk),		
