@@ -60,31 +60,37 @@ module top_tb(
 			
 			
 			
-				if ((result_prev==3'b000||result_prev==3'b101||result_prev==3'b111||result_prev==3'b011) && (result==3'b000||result==3'b101||result==3'b111|result==3'b011))
-					begin
-						$display("***Traffic TEST FAILED!,unable to self start***");
-						err=1;
-					end
+				if (result==3'b000||result==3'b101||result==3'b111|result==3'b011)
+				begin
+					$display("***TRAFFIC TEST FAILED!***");
+					err=1;
+				end
+			
 				else if ((result_prev==3'b100) && (result!=3'b110))
-					begin
-						$display("***TrafficTEST FAILED!,100->110 issue***");
-						err=1;
-					end
+				begin
+					$display("***TRAFFIC TEST FAILED!***");
+					err=1;
+				end
+
 				else if ((result_prev==3'b110) && (result!=3'b001))
-					begin
-						$display("***Traffic TEST FAILED!,110->001 issue***");
-						err=1;
-					end	
+				begin
+					$display("***TRAFFIC TEST FAILED!***");
+					err=1;
+				end	
+
 				else if ((result_prev==3'b001) && (result!=3'b010))
-					begin
-						$display("***TEST FAILED!,001->010 issue***");
-						err=1;
-					end	
-		 		else if ((result_prev==3'b010) && (result!=3'b100))
-					begin
-						$display("***Traffic TEST FAILED!,010->001 issue***");
-						err=1;
-					end
+				begin
+					$display("***TRAFFIC TEST FAILED!***");
+					err=1;
+				end	
+			
+         			else if ((result_prev==3'b010) && (result!=3'b001))
+				begin
+					$display("***TRAFFIC TEST FAILED!***");
+					err=1;
+				end
+
+			result_prev = result;
 			
 			
 			
@@ -97,50 +103,36 @@ module top_tb(
 					
 					
 				if (rst)
-				begin
-					if (result!=3'b000)
-					begin
-						$display("***Dice TEST FAILED!,Reset issue***");
-						err=1;
-					end
-				end
-				else if (result_prev==3'b000||result_prev==3'b111)
-				begin
-					if (result!= 3'b001)
-					begin
-						$display("***Dice TEST FAILED!,000 and 111 issue***");
-						err=1;
-					end
-				end
-				    
-				else if (!button)
-					begin
-					if (result!=result_prev)
-					begin
-						$display("***Dice TEST FAILED!,001 to 110 button 0 issue***");
-						err=1;
-					end
-				end
-
-				else if (result_prev==3'b110)
-				begin
-					if (result!=3'b001)
-					begin
-						$display("***Dice TEST FAILED!,110 button 1 issue***");
-						err=1;
-					end
-				end
-				else if (result!=(result_prev+1))
-				begin
-					$display("***Dice TEST FAILED!,001 to 101 button 1 issue***");
-					err=1;
-				end
-				
-
+		    		begin
+		        		if (result!=3'b000)
+		       			begin
+		            			$display("***DICE TEST FAILED!***");
+		            			err=1;
+		        		end
+		    		end
+		        
+		    		else if (result_prev==3'b000||result_prev==3'b111||result_prev==3'b110)
+		    		begin
+		        		if (result != 3'b001)
+		        		begin
+		            			$display("***DICE TEST FAILED!***");
+		            			err=1;
+		        		end
+		    		end
+		            
+		    		else if (!button)
+		    		begin
+		        		if (result!=result_prev)
+		        		begin
+		            			$display("***DICE TEST FAILED!***");
+		            			err=1;
+		        		end
+		    		end
+		    
+		    	result_prev <= result;
+		    	button=button+1;
 
 			end
-			result_prev = result;
-		    	button = button+1;
 		end
 	end
 

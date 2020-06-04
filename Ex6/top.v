@@ -41,7 +41,7 @@ module mux(
 	.green (RAG[0])
 	);
 	
-	// Instantiate dice module
+	// Instantiate roll module
  	roll rolltop (
 	.clk (clk),		
 	.rst (rst),
