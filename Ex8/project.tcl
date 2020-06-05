@@ -1,5 +1,5 @@
 
-set design "Ex8"
+set design "Ex8" 
 set top top
 set sim_top top_tb
 set device xcvu9p-fsgd2104-2L-e
