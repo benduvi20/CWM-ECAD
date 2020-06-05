@@ -15,7 +15,7 @@
 //
 //  You need to write the whole file.
 //////////////////////////////////////////////////////////////////////////////////
-`timescale 1ns / 100ps
+`timescale 1ns / 100ps 
 
 module roll(
     //ports 
